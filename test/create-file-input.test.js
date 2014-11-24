@@ -1,6 +1,6 @@
 'use strict';
 
-var createFileInput = require('../src/js/utils/create-file-input.js');
+var createFileInput = require('../create-file-input.js');
 var assert = require('assert');
 var sinon  = require('sinon');
 var expect = require('expect.js');

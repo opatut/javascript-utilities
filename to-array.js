@@ -6,7 +6,11 @@
  * @return {[type]}        [description]
  */
 var toArray = function (object) {
-    return Array.prototype.slice.call(object, 0);
+    if (typeof obj === 'function') {
+        return object.toArray();
+    }
+
+    return Array.prototype.slice.call(object);
 };
 
 module.exports = toArray;

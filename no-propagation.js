@@ -10,10 +10,10 @@ var noPropagation = function (event) {
 
     if (event.preventDefault) {
         return event.preventDefault();
-    } else {
-        event.returnValue = false;
-        return false;
     }
+
+    event.returnValue = false;
+    return false;
 };
 
 module.exports = noPropagation;
