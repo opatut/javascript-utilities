@@ -5,7 +5,7 @@
  * @param  {[type]} obj [description]
  * @return {[type]}     [description]
  */
-var extractDomNodes = function (obj) {
+var extractDomNode = function (obj) {
     if (typeof obj === 'function') {
         return obj[0];
     }
@@ -13,4 +13,4 @@ var extractDomNodes = function (obj) {
     return obj;
 };
 
-module.exports = extractDomNodes;
+module.exports = extractDomNode;
