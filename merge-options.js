@@ -12,14 +12,15 @@ var mergeOptions = function (opts, defaultOptions, self) {
     for (var i in defaultOptions) {
         if (opts && opts.hasOwnProperty(i)) {
             options[i] = opts[i];
-
-            if (typeof (options[i]) === 'function') {
-                options[i] = options[i].bind(self);
-            }
         } else {
             options[i] = defaultOptions[i];
         }
+
+        if (typeof options[i] === 'function') {
+            options[i] = options[i].bind(self);
+        }
     }
+
     return options;
 };
 
