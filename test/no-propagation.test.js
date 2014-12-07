@@ -8,13 +8,13 @@ var expect = require('expect.js');
 describe('noPropagation()', function () {
     var EventMock = function () {
         this.stopPropagation = sinon.spy();
-        this.preventDefault = sinon.spy();
-        this.returnValue = false;
+        this.preventDefault  = sinon.spy();
+        this.returnValue     = false;
     };
 
     var NoPreventDefaultMock = function () {
         this.stopPropagation = sinon.spy();
-        this.returnValue = false;
+        this.returnValue     = false;
     };
 
     var evtMock              = new EventMock();

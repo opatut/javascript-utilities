@@ -5,41 +5,47 @@ var assert = require('assert');
 var sinon  = require('sinon');
 var expect = require('expect.js');
 
+global.$ = function () {
+    this.length = 1;
+    this.toArray = sinon.spy();
+    this.get = sinon.spy();
+};
+
 describe('extractDomNodes()', function () {
-    var emptyObj = {
-        length: 0
-    };
+    describe('called with jQuery object', function () {
 
-    global.$ = function () {
-        this.length = 1;
-        this.get = sinon.spy();
-    };
-
-    it('returns if object is empty', function () {
-        expect(extractDomNodes(emptyObj)).to.be(-1);
-    });
-
-    it('calls .get() if object is instanceof $', function () {
         var instance = new $();
 
-        extractDomNodes(instance);
-        assert(instance.get.calledOnce);
+        it('calls .get() if object is instanceof $', function () {
+            extractDomNodes(instance);
+            assert(instance.get.calledOnce);
+        });
     });
 
-    it('Returns the DOM object if just 1 node is found', function () {
-        var obj = {
-            length: undefined
+    describe('called with plain DOM object', function () {
+        var emptyObj = {
+            length: 0
         };
 
-        assert.equal(extractDomNodes(obj), obj);
-    });
+        it('returns if object is empty', function () {
+            expect(extractDomNodes(emptyObj)).to.be(-1);
+        });
 
-    it('returns an array of nodes if more nodes are found', function () {
-        var obj = {
-            length: 4
-        };
+        it('Returns the DOM object if just 1 node is found', function () {
+            var obj = {
+                length: undefined
+            };
 
-        expect(extractDomNodes(obj)).to.be.an('array');
-        assert.equal(extractDomNodes(obj).length, 4);
+            assert.equal(extractDomNodes(obj), obj);
+        });
+
+        it('returns an array of nodes if more nodes are found', function () {
+            var obj = {
+                length: 4
+            };
+
+            expect(extractDomNodes(obj)).to.be.an('array');
+            assert.equal(extractDomNodes(obj).length, 4);
+        });
     });
 });

@@ -6,7 +6,7 @@
  * @return {[type]}        [description]
  */
 var toArray = function (object) {
-    if (typeof obj === 'function') {
+    if ($ && object instanceof $) {
         return object.toArray();
     }
 

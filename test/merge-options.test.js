@@ -4,7 +4,7 @@ var mergeOptions = require('../merge-options.js');
 var expect       = require('expect.js');
 var assert       = require('assert');
 
-describe('mergeOptions', function() {
+describe('mergeOptions()', function() {
     var self = 'scope';
 
     var mockOptionsA = {
