@@ -12,7 +12,7 @@
     "sinon": "~1.11.1"
   },
   "scripts": {
-    "test": "mocha --reporter spec test"
+    "test": "mocha test"
   },
   "engines": {
     "node": "0.10.3"

@@ -5,16 +5,18 @@ var assert = require('assert');
 var sinon  = require('sinon');
 var expect = require('expect.js');
 
-global.$ = function () {
-    this.length = 1;
-    this.toArray = sinon.spy();
-    this.get = sinon.spy();
-};
-
 describe('extractDomNodes()', function () {
     describe('called with jQuery object', function () {
+        var instance;
 
-        var instance = new $();
+        beforeEach(function () {
+            global.$ = function () {
+                this.length = 1;
+                this.get = sinon.spy();
+            };
+
+            instance = new $();
+        });
 
         it('calls .get() if object is instanceof $', function () {
             extractDomNodes(instance);
