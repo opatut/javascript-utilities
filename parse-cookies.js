@@ -1,3 +1,5 @@
+'use strict';
+
 var parseCookies = function () {
     var cookieData = (typeof document.cookie === 'string' ? document.cookie : '').trim();
 
