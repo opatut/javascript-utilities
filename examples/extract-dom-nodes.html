@@ -16,7 +16,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="../node_modules/jquery/dist/jquery.min.js"><\/script>')</script>
         <script>
-            var extractDomNodes = function (object) {
+            var toArray = function (object) {
                 var isDomElement = function (object) {
                     if (typeof HTMLElement === "object") {
                         return object instanceof HTMLElement;
@@ -33,12 +33,14 @@
                     return -1;
                 }
 
-                if (object && object !== null && isDomElement) {
-                    if(object && object.length === undefined) {
+                if (object && object !== null) {
+                    if(object && object.length === undefined && isDomElement(object)) {
                         return [object];
                     }
 
-                    return Array.prototype.slice.call(object);
+                    if(isDomElement(Array.prototype.slice.call(object)[0])) {
+                        return Array.prototype.slice.call(object);
+                    }
                 }
             };
 

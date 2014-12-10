@@ -22,12 +22,14 @@ var toArray = function (object) {
         return -1;
     }
 
-    if (object && object !== null && isDomElement) {
-        if(object && object.length === undefined) {
+    if (object && object !== null) {
+        if(object && object.length === undefined && isDomElement(object)) {
             return [object];
         }
 
-        return Array.prototype.slice.call(object);
+        if(isDomElement(Array.prototype.slice.call(object)[0])) {
+            return Array.prototype.slice.call(object);
+        }
     }
 };
 
