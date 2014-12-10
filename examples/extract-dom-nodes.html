@@ -7,41 +7,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <div id="element"></div>
+        <div class="element"></div>
         <div class="elements"></div>
         <div class="elements"></div>
         <div class="elements"></div>
         <div class="elements"></div>
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="../node_modules/jquery//dist/jquery.min.js"><\/script>')</script>
+        <script>window.jQuery || document.write('<script src="../node_modules/jquery/dist/jquery.min.js"><\/script>')</script>
         <script>
-            var extractDomNodes = function (obj) {
-                if (obj.length === 0 || obj.length === null) {
+            var extractDomNodes = function (object) {
+                var isDomElement = function (object) {
+                    if (typeof HTMLElement === "object") {
+                        return object instanceof HTMLElement;
+                    }
+
+                    return object &&
+                        typeof object === "object" &&
+                        object !== null &&
+                        object.nodeType === 1 &&
+                        typeof object.nodeName==="string";
+                };
+
+                if (object === null || object && object.length === 0 || object && object.length === null) {
                     return -1;
                 }
 
-                if (obj.length === undefined) {
-                    return obj;
-                }
-
-                if (obj.length > 1 && !(obj instanceof $)) {
-                    return Array.prototype.slice.call(obj);
-                }
-
-                if ($ && obj instanceof $ && obj.length > 0) {
-                    if (obj.length === 1) {
-                        return obj.get(0);
+                if (object && object !== null && isDomElement) {
+                    if(object && object.length === undefined) {
+                        return [object];
                     }
 
-                    return obj.get();
+                    return Array.prototype.slice.call(object);
                 }
             };
 
             var $elements = $('.elements');
-            var $element  = $('#element');
+            var $element  = $('.element');
             var elements  = document.querySelectorAll('.elements');
-            var element   = document.querySelector('#element');
+            var element   = document.querySelector('.element');
 
             console.log(extractDomNodes($elements));
             console.log(extractDomNodes(elements));

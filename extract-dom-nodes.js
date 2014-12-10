@@ -5,26 +5,30 @@
  * @param  {[type]} obj [description]
  * @return {[type]}     [description]
  */
-var extractDomNodes = function (obj) {
-    if (obj.length === 0 || obj.length === null) {
+var toArray = function (object) {
+    var isDomElement = function (object) {
+        if (typeof HTMLElement === "object") {
+            return object instanceof HTMLElement;
+        }
+
+        return object &&
+            typeof object === "object" &&
+            object !== null &&
+            object.nodeType === 1 &&
+            typeof object.nodeName==="string";
+    };
+
+    if (object === null || object && object.length === 0 || object && object.length === null) {
         return -1;
     }
 
-    if (obj.length === undefined) {
-        return obj;
-    }
-
-    if (obj.length > 1 && !(obj instanceof $)) {
-        return Array.prototype.slice.call(obj);
-    }
-
-    if ($ && obj instanceof $ && obj.length > 0) {
-        if (obj.length === 1) {
-            return obj.get(0);
+    if (object && object !== null && isDomElement) {
+        if(object && object.length === undefined) {
+            return [object];
         }
 
-        return obj.get();
+        return Array.prototype.slice.call(object);
     }
 };
 
-module.exports = extractDomNodes;
+module.exports = toArray;

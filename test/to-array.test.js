@@ -1,23 +1,32 @@
 'use strict';
 
-var toArray = require('../to-array.js');
-var expect  = require('expect.js');
-var sinon   = require('sinon');
-var assert  = require('assert');
+var extractDomNodes = require('../extract-dom-nodes.js');
+var assert = require('assert');
+var sinon  = require('sinon');
+var expect = require('expect.js');
+var jsdom  = require("jsdom").jsdom;
 
-describe('toArray()', function() {
-    var instance;
+global.document = jsdom("<div class='element'></div><div class='elements'></div><div class='elements'></div><div class='elements'></div><div class='elements'></div>");
+global.window   = document.parentWindow;
 
-    beforeEach(function () {
-        global.$ = function () {
-            this.toArray = sinon.spy();
-        };
+var elements     = document.querySelectorAll('.elements');
+var element      = document.querySelector('.element');
+var emptyElement = document.querySelector('.emptyElement');
 
-        instance = new $();
+describe('toArray()', function () {
+    it('returns -1 if object is empty, null or object has a length of 0', function () {
+        expect(extractDomNodes(emptyElement)).to.be(-1);
+        expect(extractDomNodes(null)).to.be(-1);
     });
 
-    it('has to call toArray if $ is defined', function () {
-        toArray(instance);
+    it('returns 1 element wrapped in an array', function () {
+        expect(extractDomNodes(element)).to.be.an('array');
+        expect(extractDomNodes(element).length).to.be(1);
+    });
+
+    it('returns an array of objects', function () {
+        expect(extractDomNodes(elements)).to.be.an('array');
+        assert.equal(extractDomNodes(elements).length, 4);
+        assert.equal(typeof extractDomNodes(elements)[0], 'object');
     });
 });
-
